@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h3><a href="{% url 'home' %}">на главную</a> </h3>
+<h3><a href="{% url 'search' %}">поиск</a> </h3>
+
+<h1>
+    Top Publihed
+</h1>
+<h1>
+    {% for task in top_post %}
+    <a href="{% url 'post' task.id %}">{{task}}</a>
+    {% endfor %}
+
+</h1>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h3><a href="{% url 'home' %}">на главную</a> </h3>
+<h3><a href="{% url 'search' %}">поиск</a> </h3>
+
+<h3>автор поста: {{ post_out.author }}</h3>
+<h1>{{ post_out.title }}</h1>
+{{ post_out.data_published }}<br><br>
+{{ post_out.text_post }}<br>
+votes: {{ post_out.votes }}
+
+
+<form action="" method="POST">
+    {% csrf_token %}
+
+    <button type="submit">like</button>
+
+
+</form>
+</body>
+</html>

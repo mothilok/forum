@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="" method="POST">
+    {% csrf_token %}
+    заголовок<br>
+    <input type="text" name="title"><br>
+    текст<br>
+    <input type="text" name="text_post"><br><br>
+    <button type="submit">Submit</button>
+</form>
+
+{% if request.POST %}
+    <script type="text/javascript" src='{% static "js/main.js" %}'></script>
+{% endif %}
+
+</body>
+</html>

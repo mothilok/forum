@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div>
+<h3><a href="{% url 'home' %}">на главную</a> </h3>
+</div>
+
+
+<h1>
+
+<form action="" method="POST">
+    {% csrf_token %}
+    <input type="text" name="request_from_template">
+    <button type="submit">Submit</button>
+
+</form>
+    {% for i in search_resalt %}
+    <h1>
+        <a href="{% url 'post' i.id %}">{{ i.title }}</a>
+    </h1>
+    {% endfor %}
+
+
+    {% if response_length == 0 %}
+
+    <h3>по вашему запросу ничего не найдено</h3>
+
+    {% endif %}
+
+</h1>
+</body>
+</html>
