@@ -2,7 +2,6 @@
 from django.db import models
 
 class Posts (models.Model):
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)
     title = models.CharField(max_length=256)
     text_post = models.TextField()
     votes = models.IntegerField(default=0)
