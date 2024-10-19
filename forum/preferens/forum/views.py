@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Posts, Array_Like
 from django.db.models import F
+from django.urls import reverse
 
 
 def home(request):
@@ -12,9 +13,9 @@ def home(request):
 
 def post_inp(request, post_id):
     like(request, post_id)
-    post_out = Posts.objects.get(id=post_id)
+    data = Posts.objects.get(id=post_id)
     context = {
-        "post_out":post_out
+        "data":data
     }
     return render(request, "forum/post.html", context)
 
@@ -33,10 +34,10 @@ def time_pub (request):
     return render(request, "forum/time_pub_t.html", context)
 
 def search_pub (request):
-    post_requtst = request.POST
-    print(post_requtst)
-    if post_requtst:
-        search_resalt = Posts.objects.filter(title=post_requtst['request_from_template'])
+
+    print(request.POST)
+    if request.POST:
+        search_resalt = Posts.objects.filter(title=request.POST['request_from_template'])
         response_length = len(search_resalt)
     else:
         search_resalt = None
@@ -47,19 +48,26 @@ def search_pub (request):
     }
     return render(request, "forum/search_t.html", context)
 
+def create_post(request):
+    if not request.user.is_authenticated:
+        return redirect(reverse('login'), permanent=True)
+    if request.method == "POST":
+        Posts(title=request.POST['title'], text_post=request.POST['text_post'], author=request.user,
+              image=request.FILES['image']).save()
+    return render(request, 'forum/create_post.html')
+
 def like(request, id_objetct):
-    post_request = request.POST
-    print(post_request)
+    print(request.POST)
     if request.user.is_authenticated:
-        if post_request:
+        if request.POST:
             id_user = request.user.id
             try:
                 check_like = Array_Like.objects.get(id_post=id_objetct, id_user=id_user)
             except:
                 check_like = False
             if check_like:
-                lower_like = Posts.objects.filter(id=id_objetct).update(votes= F("votes") - 1)
-                delete_to_Arr = Array_Like.objects.filter(id_post=id_objetct, id_user=id_user).delete()
+                Posts.objects.filter(id=id_objetct).update(votes= F("votes") - 1)
+                Array_Like.objects.filter(id_post=id_objetct, id_user=id_user).delete()
             else:
-                raise_like = Posts.objects.filter(id=id_objetct).update(votes=F("votes") + 1)
-                write_to_Arr = Array_Like(id_post=id_objetct, id_user=id_user).save()
+                Posts.objects.filter(id=id_objetct).update(votes=F("votes") + 1)
+                Array_Like(id_post=id_objetct, id_user=id_user).save()

@@ -4,6 +4,7 @@ from django.db import models
 class Posts (models.Model):
     title = models.CharField(max_length=256)
     text_post = models.TextField()
+    image = models.ImageField(blank=True, upload_to='photos_buy_to_sell') #/%Y/%m
     votes = models.IntegerField(default=0)
     data_published = models.DateTimeField(auto_now_add=True)
     author = models.CharField(max_length=100)

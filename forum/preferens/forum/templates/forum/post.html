@@ -9,11 +9,13 @@
 <h3><a href="{% url 'home' %}">на главную</a> </h3>
 <h3><a href="{% url 'search' %}">поиск</a> </h3>
 
-<h3>автор поста: {{ post_out.author }}</h3>
-<h1>{{ post_out.title }}</h1>
-{{ post_out.data_published }}<br><br>
-{{ post_out.text_post }}<br>
-votes: {{ post_out.votes }}
+<h3>автор поста: {{ data.author }}</h3>
+<h1>{{ data.title }}</h1>
+{{ data.text_post }}<br>
+img:<img src="{{ data.image.url }}"><br>
+{{ data.data_published }}<br><br>
+
+votes: {{ data.votes }}
 
 
 <form action="" method="POST">
